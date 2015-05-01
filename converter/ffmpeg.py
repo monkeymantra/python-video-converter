@@ -390,7 +390,7 @@ class FFMpeg(object):
         info.parse_ffprobe(stdout_data)
 
         if not info.format.format and len(info.streams) == 0:
-            return None
+            raise FFMpegError("Probed file does not appear to contain a valid format.")
 
         return info
 
