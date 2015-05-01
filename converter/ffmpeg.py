@@ -349,8 +349,8 @@ class FFMpeg(object):
 
     @staticmethod
     def _spawn(cmds):
-        logger.debug('Spawning ffmpeg with command: ' + ' '.join(map(str, cmds)))
-        return Popen(cmds, shell=False, stdin=PIPE, stdout=PIPE, stderr=PIPE,
+        logger.info('Spawning ffmpeg with command: ' + ' '.join(map(str, cmds)))
+        return Popen(map(str, cmds), shell=False, stdin=PIPE, stdout=PIPE, stderr=PIPE,
                      close_fds=True)
 
     def probe(self, fname, posters_as_video=True):
@@ -390,7 +390,7 @@ class FFMpeg(object):
         info.parse_ffprobe(stdout_data)
 
         if not info.format.format and len(info.streams) == 0:
-            return None
+            raise FFMpegError("Probed file does not appear to contain a valid format.")
 
         return info
 
