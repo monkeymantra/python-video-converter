@@ -349,7 +349,7 @@ class FFMpeg(object):
 
     @staticmethod
     def _spawn(cmds):
-        logger.debug('Spawning ffmpeg with command: ' + ' '.join(cmds))
+        logger.debug('Spawning ffmpeg with command: ' + ' '.join(map(str, cmds)))
         return Popen(cmds, shell=False, stdin=PIPE, stdout=PIPE, stderr=PIPE,
                      close_fds=True)
 
@@ -430,7 +430,7 @@ class FFMpeg(object):
             signal.signal(signal.SIGALRM, on_sigalrm)
 
         try:
-            p = self._spawn(cmds)
+            p = self._spawn(map(str, cmds))
         except OSError:
             raise FFMpegError('Error while calling ffmpeg binary')
 
@@ -476,7 +476,7 @@ class FFMpeg(object):
         if total_output == '':
             raise FFMpegError('Error while calling ffmpeg binary')
 
-        cmd = ' '.join(cmds)
+        cmd = ' '.join(map(str, cmds))
         if '\n' in total_output:
             line = total_output.split('\n')[-2]
 
