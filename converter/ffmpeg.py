@@ -430,7 +430,7 @@ class FFMpeg(object):
             signal.signal(signal.SIGALRM, on_sigalrm)
 
         try:
-            p = self._spawn(map(str, cmds))
+            p = self._spawn(cmds)
         except OSError:
             raise FFMpegError('Error while calling ffmpeg binary')
 
